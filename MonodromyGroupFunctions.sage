@@ -45,12 +45,12 @@ def LibreNorm(a):
 	n=F.rank()
 	L=a.Tietze()
 	if len(L)<1:
-		return F(1)
+		return (F(1))
 	primero=(L[0]+L[-1]==0)
 	while primero:
 		L=L[1:-1]
 		primero=(L[0]+L[-1]==0)
-	return F(L)
+	return (F(L))
 
 
 def LibreConj(a,b):
@@ -90,14 +90,14 @@ def LibreConj(a,b):
 	M=list(h.Tietze())
 	l=len(L)
 	if l!=len(M):
-		return False
+		return (False)
 	distintas=True
 	j=0
 	while distintas and j<l:
 		distintas=(L!=M)
 		L=L[1:]+[L[0]]
 		j=j+1
-	return not distintas
+	return (not distintas)
 
 def revertirF(a):
 	r"""
@@ -130,7 +130,7 @@ def revertirF(a):
 	n=F.rank()
 	L=a.Tietze()
 	L1=(v.sign()*(n+1-v.abs()) for v in L)
-	return F(L1)
+	return (F(L1))
 
 def revertirT(b):
 	r"""
@@ -163,7 +163,7 @@ def revertirT(b):
 	n=B.strands()
 	L=b.Tietze()
 	L1=(v.sign()*(n-v.abs()) for v in L)
-	return B(L1)
+	return (B(L1))
 
 def LibreTrenza(libre,trenza):
 	r"""
@@ -200,7 +200,7 @@ def LibreTrenza(libre,trenza):
 	"""
 	g=libre
 	s=trenza
-	return revertirF(revertirF(g)*revertirT(s))
+	return (revertirF(revertirF(g)*revertirT(s)))
 
 def conjtrenza(lista,n):
 	r"""
@@ -231,7 +231,7 @@ def conjtrenza(lista,n):
 	"""
 	B=BraidGroup(n)
 	u0,v0=[B(a) for a in lista]
-	return u0*v0/u0
+	return (u0*v0/u0)
 
 def relstrenzaconj(lista,n):
 	r"""
@@ -273,7 +273,7 @@ def relstrenzaconj(lista,n):
 	m=min(bv)
 	M=max(bv)
 	rel0=[v^-1*LibreTrenza(v,t0) for v in F.gens()[m-1:M]]
-	return [LibreTrenza(v,t1) for v in rel0]
+	return ([LibreTrenza(v,t1) for v in rel0])
 
 def relstrenza(lista,n):
 	r"""
@@ -305,7 +305,7 @@ def relstrenza(lista,n):
 	F=FreeGroup(n)
 	t0=conjtrenza(lista,n)
 	rel0=[v^-1*LibreTrenza(v,t0) for v in F.gens()]
-	return rel0
+	return (rel0)
 
 def invertirlista(lista):
 	r"""
@@ -330,7 +330,7 @@ def invertirlista(lista):
 		sage: invertirlista([2,-1,3])
 		[-3, 1, -2]
 	"""
-	return [-_ for _ in reversed(lista)]
+	return ([-_ for _ in reversed(lista)])
 
 
 def cambio_rel(lista,nuevo,elim):
@@ -370,7 +370,7 @@ def cambio_rel(lista,nuevo,elim):
 			pal+=nuevo
 		elif i==-elim:
 			pal+=inv_nuevo
-	return pal
+	return (pal)
 
 
 def cambio(grupo,elim_nuevo,elim,lista=[]):
@@ -420,7 +420,7 @@ def cambio(grupo,elim_nuevo,elim,lista=[]):
 	P.TzSearch()
 	P.TzSearch()
 	P.TzSearchEqual()
-	return [wrap_FpGroup(P.FpGroupPresentation()),listares]
+	return ([wrap_FpGroup(P.FpGroupPresentation()),listares])
 
 def cambio_elim(lista,pal,elim):
 	r"""
@@ -460,7 +460,7 @@ def cambio_elim(lista,pal,elim):
 			p+=pal
 		elif i==-elim:
 			p+=palinv
-	return p
+	return (p)
 
 def eliminar(grupo,generador,lista=[]):
 	r"""
@@ -500,7 +500,7 @@ def eliminar(grupo,generador,lista=[]):
 	aux=[[i.abs() for i in _] for _ in rels]
 	ind=[j for j in range(len(rels)) if aux[j].count(generador)==1 ]
 	if ind==[]:
-		return grupo
+		return (grupo)
 	cnt=[len(rels[j]) for j in ind]
 	m=min(cnt)
 	rel=rels[ind[cnt.index(m)]]
@@ -526,7 +526,7 @@ def eliminar(grupo,generador,lista=[]):
 	P.TzSearch()
 	P.TzSearch()
 	P.TzSearchEqual()
-	return [wrap_FpGroup(P.FpGroupPresentation()),listares]
+	return ([wrap_FpGroup(P.FpGroupPresentation()),listares])
 
 def CyclicComm(lista):
 	r"""
@@ -558,12 +558,12 @@ def CyclicComm(lista):
 	"""
 	n=len(lista)
 	if n<2:
-		return []
+		return ([])
 	pr=prod(lista)
 	res=[]
 	for a in lista[1:]:
 		res.append(a*pr/a/pr)
-	return res
+	return (res)
 
 def GtoK(G,elto,K):
 	r"""
@@ -605,7 +605,7 @@ def GtoK(G,elto,K):
 	epiK=K.EpimorphismFromFreeGroup()
 	pal=epiG.PreImagesRepresentative(elto)
 	num=pal.TietzeWordAbstractWord(epiG.Source().GeneratorsOfGroup())
-	return epiK.Image(num.AbstractWordTietzeWord(epiK.Source().GeneratorsOfGroup()))
+	return (epiK.Image(num.AbstractWordTietzeWord(epiK.Source().GeneratorsOfGroup())))
 
 def GtoTietze(G,elto):
 	r"""
@@ -638,7 +638,7 @@ def GtoTietze(G,elto):
 	epiG=G.EpimorphismFromFreeGroup()
 	pal=epiG.PreImagesRepresentative(elto)
 	num=pal.TietzeWordAbstractWord(epiG.Source().GeneratorsOfGroup())
-	return num.sage()
+	return (num.sage())
 
 def abelianizar(tz,m):
 	r"""
@@ -674,7 +674,7 @@ def abelianizar(tz,m):
 		signo=i.sign()
 		absoluto=i.abs()
 		v=v+signo*B[absoluto-1]
-	return v
+	return (v)
 
 def MatrizAbel(grupo):
 	r"""
@@ -710,7 +710,7 @@ def MatrizAbel(grupo):
 	A=[]
 	for tz in TZ:
 		A.append(abelianizar(tz,m))
-	return Matrix(A)
+	return (Matrix(A))
 
 def CambioVarSmith(matriz,smith,tt):
 	r"""
@@ -766,7 +766,7 @@ def CambioVarSmith(matriz,smith,tt):
 				m=A[i,j]    
 			T=T*(tt[j]^m)
 		dic.update({tt[i]:T})
-	return dic,I
+	return (dic,I)
 
 def caracter(x,R,cambio):
 	r"""
@@ -804,7 +804,7 @@ def caracter(x,R,cambio):
 	res=R(0)
 	for i in list(x):
 		res+=i[1]*prod([tt[abs(j)-1]^sign(j) for j in i[0].Tietze()])
-	return res.subs(cambio)
+	return (res.subs(cambio))
 
 def unidades(f,R):
 	r"""
@@ -845,14 +845,14 @@ def unidades(f,R):
 
 	"""
 	if f==f.parent(0):
-		return 0
+		return (0)
 	ex=f.exponents()
 	n=f.parent().ngens()
 	u=1
 	for j in range(n):
 		mx=min([v[j] for v in ex])
 		u=u*R.gen(j)^mx
-	return u
+	return (u)
 
 def unidadeslista(lista,R):
 	r"""
@@ -891,7 +891,7 @@ def unidadeslista(lista,R):
 
 	"""
 	monomios=sum([unidades(_,R) for _ in lista])
-	return unidades(monomios,R)
+	return (unidades(monomios,R))
 
 def unidadesmatriz(matriz,R,O='R'):
 	r"""
@@ -933,7 +933,7 @@ def unidadesmatriz(matriz,R,O='R'):
 
 	"""
 	if O=='C':
-		return unidadesmatriz(matriz.transpose(),R).transpose()
+		return (unidadesmatriz(matriz.transpose(),R).transpose())
 	A=matriz.change_ring(R)
 	n=A.nrows()
 	L=A.rows()
@@ -941,7 +941,7 @@ def unidadesmatriz(matriz,R,O='R'):
 	for i in range(n):
 		if U[i]!=A.base_ring()(0):
 			L[i]=U[i]^-1*L[i]
-	return Matrix(L)
+	return (Matrix(L))
 
 
 
@@ -991,7 +991,7 @@ def Hay_unidades(A,R,S,dividir=False):
 		if i==n:
 			j+=1
 			i=0
-	return res
+	return (res)
 
 
 def reducir_matriz(A,R,S,ideal,dividir=False):
@@ -1042,7 +1042,7 @@ def reducir_matriz(A,R,S,ideal,dividir=False):
 		A1=A1.change_ring(R)
 		res=Hay_unidades(A1,R,S,dividir)
 		n,m=A1.dimensions()
-	return A1
+	return (A1)
 
 def grafoplumbing(grafo,selfint,generos=None,flechas=None):
 	r"""
@@ -1083,7 +1083,7 @@ def grafoplumbing(grafo,selfint,generos=None,flechas=None):
 	A=grafo.adjacency_matrix()
 	for i in range(n):
 		A[i,i]=selfint[i]
-	print "Definida negativa: ",(-A).is_positive_definite()
+	print("Definida negativa: ",(-A).is_positive_definite())
 	T=grafo.spanning_trees()[0]
 	L=[_ for _ in grafo.edges(labels=False) if _ not in T.edges(labels=False)]
 	m=len(L)
@@ -1142,7 +1142,7 @@ def grafoplumbing(grafo,selfint,generos=None,flechas=None):
 		for x in gensflechas[j]:
 			rlk.append(a[j]*x/a[j]/x)
 	g=F/rlk
-	return g
+	return (g)
 	
 def AnilloMatriz(grupo):
 	r"""
@@ -1199,7 +1199,7 @@ def AnilloMatriz(grupo):
 	R.inject_variables(verbose=False)
 	tt=R.gens()
 	cambio,idl=CambioVarSmith(V,Sm,tt)
-	print cambio
+	print (cambio)
 	A=matrix(M.nrows(),M.ncols(),[caracter(_,R,cambio) for _ in M.list()])
 	A1=unidadesmatriz(unidadesmatriz(A,R),R,O='C').change_ring(S)
 	A1=Matrix(A1.nrows(),[v.reduce(S.ideal(idl)) for v in A1.list()])
@@ -1212,7 +1212,7 @@ def AnilloMatriz(grupo):
 	S1=R1.polynomial_ring()
 	idl1=[S1(S(_)) for _ in idl]
 	A2=A1.change_ring(S1)
-	return R1,S1,A2,idl1
+	return (R1,S1,A2,idl1)
 
 
 def pseudo_coxeter(lista):
@@ -1240,7 +1240,7 @@ def pseudo_coxeter(lista):
 		s3*s2*s1*s0
 
 	"""
-	return prod([_ for _ in reversed(lista)])
+	return (prod([_ for _ in reversed(lista)]))
 
 def gapperm(listatupla):
 	r"""
@@ -1269,11 +1269,11 @@ def gapperm(listatupla):
 
 	"""
 	if type(listatupla)==tuple:
-		return gap(PermutationGroupElement(listatupla))
+		return (gap(PermutationGroupElement(listatupla)))
 	res=gap(PermutationGroupElement(()))
 	for tupla in listatupla:
 		res=res*gap(PermutationGroupElement(tupla))
-	return res
+	return (res)
 
 def generadores_trenzas(lista,hilos):
 	r"""
@@ -1314,7 +1314,7 @@ def generadores_trenzas(lista,hilos):
 	k0=Sg.Subgroup(map(gapperm,lista))
 	genS=homg.PreImage(k0).GeneratorsOfGroup()
 	generadores=[B0(_.UnderlyingElement().TietzeWordAbstractWord().sage()) for _ in genS]
-	return generadores
+	return (generadores)
 
 def GapConvert(objeto):
 	r"""
@@ -1341,11 +1341,11 @@ def GapConvert(objeto):
 	"""
 	tipo=str(type(objeto)).upper()
 	if 'GAP' in tipo and 'LINEAR' not in tipo:
-		return objeto
+		return (objeto)
 	elif 'PERM' in tipo:
-		return gap(objeto)
+		return (gap(objeto))
 	else:
-		return objeto.gap()
+		return (objeto.gap())
 	
 
 
@@ -1387,12 +1387,12 @@ def HomomorphismGroups(G1,G2,im):
 		[ s0, s1 ] -> [ (1,2), (2,3) ]
 		
 	"""
-	g1=GapConvert(G1)
-	g2=GapConvert(G2)
+	g1=G1.gap()
+	g2=G2.gap()
 	gen=g1.GeneratorsOfGroup()
-	im0=map(GapConvert,im)
+	im0=[_.gap() for _ in im]
 	hom=g1.GroupHomomorphismByImages(g2,gen,im0)
-	return hom
+	return (hom)
 
 
 def HomImageEl(hom,el):
@@ -1421,7 +1421,7 @@ def HomImageEl(hom,el):
 		s0*s1^-1
 		
 	"""
-	return hom.Image(GapConvert(el))
+	return (hom.Image(GapConvert(el)))
 
 def HomImageSub(hom,lista):
 	r"""
@@ -1454,7 +1454,7 @@ def HomImageSub(hom,lista):
 	listaim=[hom.Image(_) for _ in listag]
 	gs=hom.Range()
 	im=gs.Subgroup(listaim)
-	return im
+	return (im)
 
 
 def Centralizador(ggap,elgap):
@@ -1486,7 +1486,7 @@ def Centralizador(ggap,elgap):
 		Group( [ (1,2)(3,4) ] )
 		
 	"""
-	return ggap.Centralizer(elgap)
+	return (ggap.Centralizer(elgap))
 
 def Normalizador(ggap,subgap):
 	r"""
@@ -1515,7 +1515,7 @@ def Normalizador(ggap,subgap):
 		Group( [ (2,4), (1,4,3,2), (1,3)(2,4) ] )
 		
 	"""
-	return ggap.Normalizer(subgap)
+	return (ggap.Normalizer(subgap))
 
 def Hurwitz0(B,gensS,br1,br2,GS,lista):
 	r"""
@@ -1583,17 +1583,17 @@ def Hurwitz0(B,gensS,br1,br2,GS,lista):
 		M2g=hom.Range().Subgroup(segundo0)
 		normales=CSg.IsConjugate(M1g,M2g)
 		if not bool(normales):
-			return None
+			return (None)
 		vale=CSg.RepresentativeAction(M2g,M1g)
 		#NSg=CSg.Normalizer(M1g)
 		NSg=Normalizador(CSg,M1g)
 		segundo1=[vale^-1*_*vale for _ in segundo0]
 		#M2g=hom.Range().Subgroup(segundo1)
 		segundo=[[g0*_/g0 for _ in segundo1] for g0 in NSg.Elements()]
-		#return [bool(prod([cxg1==prod([h for h in reversed(_)]) for _ in segundo])),brg1,segundo,NSg]
-		return [brg1,segundo,NSg,grupo,listagap]
-	print 'Coxeter distinto'
-	return None
+		#return ([bool(prod([cxg1==prod([h for h in reversed(_)]) for _ in segundo])),brg1,segundo,NSg])
+		return ([brg1,segundo,NSg,grupo,listagap])
+	print ('Coxeter distinto')
+	return (None)
 
 def HurwitzTrenza(trenza,lista,grupo):
 	r"""
@@ -1638,7 +1638,7 @@ def HurwitzTrenza(trenza,lista,grupo):
 		for j in tupla:
 			res0=res0*lista[j.abs()-1]^j.sign()
 		res.append(res0)
-	return tuple(res)
+	return (tuple(res))
 
 
 def Hurwitz1(B,gensS,generadores,br1,br2,GS,lista):
@@ -1692,26 +1692,26 @@ def Hurwitz1(B,gensS,generadores,br1,br2,GS,lista):
 	"""
 	hurwitz=Hurwitz0(B,gensS,br1,br2,GS,lista)
 	if hurwitz==None:
-		print "Orbitas no coinciden"
-		return None
+		print ("Orbitas no coinciden")
+		return (None)
 	brg1,segundo,gr,grupo,listagap=hurwitz
 	segundo=map(tuple,segundo)
 	orbita=[tuple(brg1)]
 	aumentar=[tuple(brg1)]
 	if brg1 in segundo:
-		print "Orbitas coinciden"
-		return segundo
+		print ("Orbitas coinciden")
+		return (segundo)
 	control0=True
 	while control0:
 		nuevos=[]
-		print "aumentar ",len(aumentar)
+		print ("aumentar ",len(aumentar))
 		for elt in aumentar:
 			for kj in generadores:
 				elt1=HurwitzTrenza(kj,elt,GapConvert(GS))
 				control=elt1 in segundo
 				if control:
-					print "Orbitas coinciden"
-					return segundo
+					print ("Orbitas coinciden")
+					return (segundo)
 				orbcnj=[tuple([g^-1*_*g for _ in elt1]) for g in gr.Elements()]
 				#control1=len(Set(orbita).intersection(Set(orbcnj)))==0
 				control1=True
@@ -1723,13 +1723,13 @@ def Hurwitz1(B,gensS,generadores,br1,br2,GS,lista):
 				if control1:
 					orbita.append(elt1)
 					nuevos.append(elt1)    
-			#print "nuevos ",len(nuevos),"\n lugar ",aumentar.index(elt),"\n"
-		print "nuevos ",len(nuevos)
-		print "orbita ",len(orbita)
+			#print ("nuevos ",len(nuevos),"\n lugar ",aumentar.index(elt),"\n")
+		print ("nuevos ",len(nuevos))
+		print ("orbita ",len(orbita))
 		aumentar=copy(nuevos)
 		control0=len(nuevos)>0  
-	print "Orbitas no coinciden"
-	return orbita,segundo,gr,grupo,listagap
+	print ("Orbitas no coinciden")
+	return (orbita,segundo,gr,grupo,listagap)
 
 
 def HurwitzOrbita(B,gensS,generadores,br1,GS,lista):
@@ -1814,7 +1814,7 @@ def HurwitzOrbita(B,gensS,generadores,br1,GS,lista):
 	control0=True
 	while control0:
 		nuevos=[]
-		print "aumentar ",len(aumentar)
+		print ("aumentar ",len(aumentar))
 		iterador=xmrange_iter([aumentar,generadores])
 		for (elt,kj) in iterador:
 			elt1=HurwitzTrenza(kj,elt,GapConvert(GS))
@@ -1828,11 +1828,11 @@ def HurwitzOrbita(B,gensS,generadores,br1,GS,lista):
 			if control1:
 				orbita.append(elt1)
 				nuevos.append(elt1)    
-		print "nuevos ",len(nuevos)
-		print "orbita ",len(orbita)
+		print ("nuevos ",len(nuevos))
+		print ("orbita ",len(orbita))
 		aumentar=copy(nuevos)
 		control0=len(nuevos)>0  
-	return orbita,gr,grupo,listagap
+	return (orbita,gr,grupo,listagap)
 	
 	
 def burauperm(nm,m,hilos,field=False):
@@ -1885,7 +1885,7 @@ def burauperm(nm,m,hilos,field=False):
 	iso2=g1a.SmallerDegreePermutationRepresentation()
 	g2=iso2.Image()
 	lista2=[iso2.Image(GapConvert(_)) for _ in lista1]
-	return g2,lista2
+	return (g2,lista2)
 
 def compruebaorbita(orbita,lista):
 	r"""
@@ -1947,7 +1947,7 @@ def compruebaorbita(orbita,lista):
 	while not res and k<l:
 		res=res or lista[k] in orbita
 		k=k+1
-	return res
+	return (res)
 
 
 def orbitapermutacion(orbita,grupo,generadores):
@@ -2012,5 +2012,5 @@ def orbitapermutacion(orbita,grupo,generadores):
 		porbita=Permutation([pair[0] for pair in sorted(orbitaconjnum, key=lambda x: x[1])])
 		pim=Permutation([pair[0] for pair in sorted(imconjnum, key=lambda x: x[1])])
 		permutaciones.append(gap(pim.inverse()*porbita))
-	return permutaciones
+	return (permutaciones)
 
