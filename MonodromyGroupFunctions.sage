@@ -28,7 +28,7 @@ def LibreNorm(a):
 	The cyclic reduction of the word
 
 
-	EXAMPLES:
+	EXAMPLES: 
 
 	This example illustrates a simple use of this function
 
